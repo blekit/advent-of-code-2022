@@ -7,21 +7,25 @@ fun main() {
     println(solvePartTwo())
 }
 
+fun String.toSetOfCharacters(): Set<Char> = this.toCharArray().toSet()
+
+fun String.splitInHalf(): Pair<Set<Char>, Set<Char>> {
+    val splitted = this.chunked(this.length / 2)
+    return splitted[0].toSetOfCharacters() to splitted[1].toSetOfCharacters()
+}
+
 fun solvePartOne(): Int {
     return readInput("/day3-input")
-        .map {
-            val splittedLine = it.chunked(it.length / 2)
-            splittedLine[0].toCharArray() to splittedLine[1].toCharArray()
-        }
-        .flatMap { it.first.intersect(it.second.toSet()) }
+        .map { it.splitInHalf() }
+        .flatMap { it.first.intersect(it.second) }
         .sumOf { letterPriority(it) }
 }
 
 fun solvePartTwo(): Int {
     return readInput("/day3-input")
-        .map { it.toCharArray().toSet() }
+        .map { it.toSetOfCharacters() }
         .windowed(3, 3)
-        .flatMap { it.reduce { rucksack, commonCodes -> rucksack.intersect(commonCodes.toSet()) } }
+        .flatMap { it.reduce(Set<Char>::intersect) }
         .sumOf { letterPriority(it) }
 }
 
