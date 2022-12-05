@@ -1,6 +1,6 @@
 package com.adventofcode.day1
 
-import readInput
+import com.adventofcode.readInput
 
 data class Elf(val id: Int, var calories: Int)
 
