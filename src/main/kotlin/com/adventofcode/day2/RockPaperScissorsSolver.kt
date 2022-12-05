@@ -2,7 +2,7 @@ package com.adventofcode.day2
 
 import com.adventofcode.day2.Outcome.*
 import com.adventofcode.day2.PlayerChoices.*
-import readInput
+import com.adventofcode.readInput
 
 
 enum class Outcome(val score: Int) {

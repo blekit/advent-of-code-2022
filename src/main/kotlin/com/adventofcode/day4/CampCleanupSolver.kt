@@ -1,6 +1,6 @@
 package com.adventofcode.day4
 
-import readInput
+import com.adventofcode.readInput
 
 fun main() {
     println(solvePartOne())
