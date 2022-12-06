@@ -7,45 +7,43 @@ fun main() {
     println(solvePartTwo())
 }
 
-data class Instruction(val numberOfCrates: Int, val from: Int, val to: Int)
+data class Instruction(val numberOfCrates: Int, val fromStack: Int, val toStack: Int)
 
 typealias SupplyStacks = ArrayDeque<Char>
 
-
 fun solvePartOne(): String {
     val input = readInput("/day5-input")
-    val parsedStacks = parseSupplyStacks(input.subList(0, 8))
+    val supplyStacks = parseSupplyStacks(input.subList(0, 8))
     val instructions = input.drop(10).map { parseInstruction(it) }
     instructions.forEach { instruction ->
         for (i in instruction.numberOfCrates downTo 1) {
-            val supplyId = parsedStacks[instruction.from]?.removeFirst()
-                ?: throw RuntimeException("Cannot collect supplies from empty stack ${instruction.from}")
-            parsedStacks[instruction.to]?.addFirst(supplyId)
+            val supplyId = supplyStacks[instruction.fromStack]?.removeFirst()
+                ?: throw RuntimeException("Cannot collect supplies from empty stack ${instruction.fromStack}")
+            supplyStacks[instruction.toStack]?.addFirst(supplyId)
         }
     }
-    return parsedStacks.values.joinToString(separator = "") { it.first().toString() }
+    return supplyStacks.values.joinToString(separator = "") { it.first().toString() }
 }
 
 fun solvePartTwo(): String {
     val input = readInput("/day5-input")
-    val parsedStacks = parseSupplyStacks(input.subList(0, 8))
+    val supplyStacks = parseSupplyStacks(input.subList(0, 8))
     val instructions = input.drop(10).map { parseInstruction(it) }
     instructions.forEach { instruction ->
         for (i in instruction.numberOfCrates downTo 1) {
-            val supplyId = parsedStacks[instruction.from]?.removeAt(i-1)
-                ?: throw RuntimeException("Cannot collect supplies from empty stack ${instruction.from}")
-            parsedStacks[instruction.to]?.addFirst(supplyId)
+            val supplyId = supplyStacks[instruction.fromStack]?.removeAt(i-1)
+                ?: throw RuntimeException("Cannot collect supplies from empty stack ${instruction.fromStack}")
+            supplyStacks[instruction.toStack]?.addFirst(supplyId)
         }
     }
-    return parsedStacks.values.joinToString(separator = "") { it.first().toString() }
+    return supplyStacks.values.joinToString(separator = "") { it.first().toString() }
 }
 
 private fun Int.toSupplyIdIndex() = this * 4 - 3
 
 tailrec fun parseSupplyStacks(lines: List<String>, stacks: MutableMap<Int, SupplyStacks> = sortedMapOf()): Map<Int, SupplyStacks> {
     if (lines.isEmpty()) return stacks;
-    val line = lines.first()
-    fillStacksWithSupplyIds(line, stacks)
+    fillStacksWithSupplyIds(lines.first(), stacks)
     return parseSupplyStacks(lines.drop(1), stacks)
 }
 
