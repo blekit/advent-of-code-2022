@@ -1,4 +1,4 @@
-package com.adventofcode.day1
+package com.adventofcode.day01
 
 import com.adventofcode.readInput
 
