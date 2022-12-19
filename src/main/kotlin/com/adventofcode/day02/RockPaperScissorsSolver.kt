@@ -1,7 +1,7 @@
-package com.adventofcode.day2
+package com.adventofcode.day02
 
-import com.adventofcode.day2.Outcome.*
-import com.adventofcode.day2.PlayerChoices.*
+import com.adventofcode.day02.Outcome.*
+import com.adventofcode.day02.PlayerChoices.*
 import com.adventofcode.readInput
 
 
